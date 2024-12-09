@@ -1,0 +1,154 @@
+/// <reference types="cypress"/>
+
+it("google search",()=>{
+
+    cy.visit('https://www.google.com/')
+    cy.get('#APjFqb').type('automation step by step{Enter}')
+    cy.wait(2000)
+    cy.contains('Videos').click()
+
+
+})
+
+assertions:
+it('assertion demo', () => {
+
+    
+      cy.visit('https://example.cypress.io')
+
+
+      cy.get(':nth-child(4) > .row > .col-xs-12 > .home-list > :nth-child(1) > :nth-child(1)').click()
+      cy.get('#query-btn')
+      .should('contain','Button')
+      .and('have.class','query-btn')
+      .and('be.enabled')
+      .and('be.visible')
+    
+      //explicit
+
+      expect(true).to.be.true
+
+
+      assert.equal(4,4,' equal')
+}
+)
+
+
+create Login Test
+
+/// <reference types="cypress"/>
+it('POM DEMO',()=>{
+    cy.visit('https://trytestingthis.netlify.app/')
+    cy.get('#uname').type('test')
+    cy.get('#pwd').type('test')
+    cy.get('[type="submit"]').click()
+})
+
+
+PAGE OJECT MODEL
+import { Loginpage } from "./pages/loginpage"
+
+const loginpage = new Loginpage()
+it('POM DEMO',()=>{
+    cy.visit('https://trytestingthis.netlify.app/')
+    
+    loginpage.enterusername('Admin')
+    loginpage.enterpassword('admin123')
+    loginpage.clicklogin()
+})
+
+LOGIN PAGE CLASS
+export class Loginpage{
+
+
+    usernametextbox ='#uname'
+    passwordtextbox ='#pwd'
+   login_button='[type="submit"]'
+    enterusername(username){
+
+        cy.get(this.usernametextbox).type(username)
+      
+
+    }
+    enterpassword(password){
+        cy.get(this.passwordtextbox).type(password)
+    }
+
+    clicklogin(){
+        cy.get(this.login_button).click()
+    }
+}
+
+describe and before each block
+
+/// <reference types="cypress"/>
+import { Loginpage } from "./pages/loginpage"
+
+const loginpage = new Loginpage()
+
+
+describe('All lOGIN TEST',()=>{
+
+    beforeEach(function(){
+        cy.visit('https://trytestingthis.netlify.app/')
+    })
+    it.skip('Login test1',()=>{
+        
+        
+        loginpage.enterusername('Admin')
+        loginpage.enterpassword('admin123')
+        loginpage.clicklogin()
+    })
+    
+    it('Login test2',()=>{
+       
+        loginpage.enterusername('Admin')
+        loginpage.enterpassword('admin123')
+        loginpage.clicklogin()
+    })
+
+})
+read file using fixture and read files
+before(function () {
+    cy.fixture('example.json').as('test_data'); // Load fixture and alias it
+});
+
+it("Read File using fixtures", function () {
+    // Use 'function()' to maintain the Mocha context
+    cy.fixture('example.json').then((data) => {
+        cy.log(data.name); // Log data from the fixture file
+        cy.log(data.email);
+    });
+
+    // Access fixture data from the Mocha context
+    cy.log(this.test_data.name);
+    cy.log(this.test_data.email);
+});
+
+it("read file using read file()",()=>{
+    cy.readFile('./cypress/fixtures/example.json').then((data)=>{
+        cy.log(data.name)
+        cy.log(data.email)
+    })
+})
+
+write file using write file
+it ('write file demo',()=>{
+    cy.writeFile('sample.txt','hello i am ahsaan hassan')
+
+    cy.writeFile('sample.txt','hello i am learning cypress',{flag:'a+'})
+})
+
+fileupload and download
+
+/// <reference types='cypress'/>
+/// <reference types="cypress-downloadfile"/>
+it( 'file upload test',()=>{
+    cy.visit('https://trytestingthis.netlify.app/')
+    cy.get('#myfile').attachFile('download')
+})
+
+it('file download test',()=>{
+    cy.downloadFile('https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg','mydownloads','example.jpg')
+
+})
